@@ -32,7 +32,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: "https://astrovnit.in"
+    origin: ["https://astrovnit.in", "http://localhost:3000"]
   })
 );
 

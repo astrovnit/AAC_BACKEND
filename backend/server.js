@@ -31,10 +31,11 @@ let transport = nodemailer.createTransport({
 const PORT = process.env.PORT || 5000;
 
 app.use(
-  cors({
-    origin: "https://astrovnit.in"
-  })
+    cors({
+      origin: ["https://astrovnit.in", "http://localhost:3000"],
+    })
 );
+
 
 app.use(morgan("dev"));
 

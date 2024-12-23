@@ -15,5 +15,4 @@ router.post("/postblog", authenticateLogin, blogController.postblog);
 router.post("/updateBlog",authenticateLogin,blogController.updateBlog);
 
 
-
 module.exports = router;

@@ -9,7 +9,8 @@ const nodemailer = require("nodemailer");
 const userRoutes = require("./routes/userRoutes");
 const blogRoutes = require("./routes/blogRoutes");
 const adminRoutes = require("./routes/adminRoutes");
-
+const resourceRoutes = require("./routes/resourceRoutes");
+const bodyParser = require("body-parser");
 mongoose.set("strictQuery", false);
 
 mongoose.connect(process.env.MONGO_URI, () => {
@@ -30,18 +31,26 @@ let transport = nodemailer.createTransport({
 });
 const PORT = process.env.PORT || 5000;
 
-app.use(
-    cors({
-      origin: ["https://astrovnit.in", "http://localhost:3000"],
-    })
-);
+if(process.env.NODE_ENV === "development") {
+  app.use(cors());
+}
+else{
+  app.use(
+      cors({
+        origin: ["https://astrovnit.in", "http://localhost:3000"],
+      })
+  );
+}
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 
 
 app.use(morgan("dev"));
-
 app.use("/user", userRoutes);
 app.use("/blog", blogRoutes);
 app.use("/admin", adminRoutes);
+app.use("/resources", resourceRoutes);
 
 app.post("/contact", (req, res) => {
   let mailOptions = {
